@@ -6,7 +6,7 @@ spring:
   datasource:
     username: user
     password: password
-    url: jdbc:postgresql://localhost:5432/fraud-check
+    url: jdbc:postgresql://localhost:5432/fraud
   jpa:
     hibernate:
       ddl-auto: create-drop
