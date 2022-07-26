@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomerController {
 
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
     @GetMapping
     public List<Customer> getAll(){
