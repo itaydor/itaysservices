@@ -2,6 +2,7 @@ package com.itayscode.customer;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
+    private final RestTemplate restTemplate;
 
     public List<Customer> getAll() {
         return customerRepository.findAll();
@@ -20,7 +22,19 @@ public class CustomerService {
                 .lastName(customerRegistrationRequest.lastName())
                 .email(customerRegistrationRequest.email())
                 .build();
-        customerRepository.save(customer);
+
+        customerRepository.saveAndFlush(customer);
+
+        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
+                "https://localhost:8081/api/v1/fraud-check/{customerID}",
+                FraudCheckResponse.class,
+                customer.getId()
+        );
+        if(fraudCheckResponse.isFraudster()){
+            throw new IllegalStateException("fraudster");
+        }
+
+
     }
 
     public Customer getCustomerByEmail(String email) {
