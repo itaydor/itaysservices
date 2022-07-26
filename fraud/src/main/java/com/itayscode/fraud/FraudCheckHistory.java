@@ -22,7 +22,7 @@ public class FraudCheckHistory {
             sequenceName = "fraud_id_sequence"
     )
     @GeneratedValue(
-            strategy = GenerationType.AUTO,
+            strategy = GenerationType.SEQUENCE,
             generator = "fraud_id_sequence"
     )
     private Integer id;
