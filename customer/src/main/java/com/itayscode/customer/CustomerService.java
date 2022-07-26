@@ -24,4 +24,8 @@ public class CustomerService {
                 .build();
         customerRepository.save(customer);
     }
+
+    public Customer getCustomerByEmail(String email) {
+        return customerRepository.getCustomerByEmail(email);
+    }
 }
