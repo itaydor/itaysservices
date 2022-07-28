@@ -26,7 +26,7 @@ public class NotificationApplication {
             producer.publish(
                     new Person("itay", 35),
                     notificationConfig.getInternalExchange(),
-                    notificationConfig.getNotificationQueue());
+                    notificationConfig.getInternalNotificationRoutingKey());
         };
     }
 
