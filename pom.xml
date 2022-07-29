@@ -28,6 +28,9 @@
     <spring-boot-dependencies.version>2.5.7</spring-boot-dependencies.version>
     <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
     <spring.cloud-version>2020.0.3</spring.cloud-version>
+    <image>itaydor/${project.artifactId}:${project.version}</image>
+<!--    <image>my_docker_hub_username/${project.artifactId}:{project.version} </image>-->
+
   </properties>
 
   <dependencyManagement>
@@ -64,6 +67,7 @@
     </dependency>
   </dependencies>
 
+<!--  those plugins will be available only here-->
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
@@ -79,8 +83,43 @@
            </execution>
          </executions>
        </plugin>
+        <plugin>
+          <groupId>com.google.cloud.tools</groupId>
+          <artifactId>jib-maven-plugin</artifactId>
+          <version>3.1.4</version>
+          <configuration>
+            <from>
+              <image>eclipse-temurin:17@sha256:2b47a8ea946ce1e5365a1562414ed576e378b7b670cadff3fb98ebecf2890cdc</image>
+              <platforms>
+                <platform>
+                  <architecture>arm64</architecture>
+                  <os>linux</os>
+                </platform>
+                <platform>
+                  <architecture>amd64</architecture>
+                  <os>linux</os>
+                </platform>
+              </platforms>
+            </from>
+            <to>
+              <tags>
+                <tag>latest</tag>
+              </tags>
+            </to>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>build</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
+
+<!--    those plugins will be copied to all microservices -->
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
